@@ -13,12 +13,13 @@ public class SpringAiBoardGameService implements BoardGameService{
     }
 
     @Override
-    public Anwser askQuestion(Question question) {
+    public Answer askQuestion(Question question) {
 
         var anwserText = chatClient.prompt()
                 .user(question.question())
                 .call()
                 .content();
-        return new Anwser(anwserText);
+        return new Answer(anwserText);
     }
+
 }

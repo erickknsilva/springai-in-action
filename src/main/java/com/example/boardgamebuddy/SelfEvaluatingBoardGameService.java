@@ -8,7 +8,6 @@ import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
-@Service
 public class SelfEvaluatingBoardGameService implements  BoardGameService{
 
     private final ChatClient chatClient;
@@ -37,12 +36,12 @@ public class SelfEvaluatingBoardGameService implements  BoardGameService{
 
         evaluateRelevancy(question,answerText);
 
-        return new Answer(answerText);
+        return new Answer(question.gameTitle(), answerText);
     }
 
     @Recover
     public Answer recover(AnswerNotRelevantException e) {
-        return new Answer("I'm sorry, I wasn't able to answer the question.");
+        return new Answer("","I'm sorry, I wasn't able to answer the question.");
     }
 
     private void evaluateRelevancy(Question question, String answerText) {

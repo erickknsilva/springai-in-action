@@ -1,6 +1,7 @@
 package com.example.boardgamebuddy;
 
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ public class AskController {
     }
 
     @PostMapping(path = "/ask", produces = "application/json")
-    public Anwser askQuestion(@RequestBody Question question) {
+    public Anwser askQuestion(@RequestBody @Valid Question question) {
         return boardGameService.askQuestion(question);
     }
 

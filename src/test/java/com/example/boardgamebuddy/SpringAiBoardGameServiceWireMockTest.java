@@ -18,9 +18,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 @EnableWireMock(@ConfigureWireMock(baseUrlProperties = "openai.base.url"))
-@SpringBootTest(properties = {"spring.ai.openai.base-url=${openai.base.url}",
-        "spring.ai.openai.api-key=test-key"}
-)
+@SpringBootTest(properties = {"spring.ai.openai.base-url=${openai.base.url}"})
 public class SpringAiBoardGameServiceWireMockTest {
 
 

@@ -1,5 +1,7 @@
 package com.example.boardgamebuddy;
 
+import com.example.boardgamebuddy.domain.Question;
+import com.example.boardgamebuddy.service.SpringAiBoardGameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;

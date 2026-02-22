@@ -1,6 +1,9 @@
-package com.example.boardgamebuddy;
+package com.example.boardgamebuddy.controller;
 
 
+import com.example.boardgamebuddy.domain.Answer;
+import com.example.boardgamebuddy.domain.Question;
+import com.example.boardgamebuddy.contracts.BoardGameService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

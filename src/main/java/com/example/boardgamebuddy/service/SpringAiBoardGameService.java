@@ -1,17 +1,21 @@
-package com.example.boardgamebuddy;
+package com.example.boardgamebuddy.service;
 
+import com.example.boardgamebuddy.domain.Answer;
+import com.example.boardgamebuddy.domain.Question;
+import com.example.boardgamebuddy.contracts.BoardGameService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SpringAiBoardGameService implements BoardGameService{
+public class SpringAiBoardGameService implements BoardGameService {
 
     private final ChatClient chatClient;
+    private final GameRuleService gameRuleService;
 
-    @Value("classpath:/promptTemplates/questionPromptTemplate.st")
-    Resource questionPromptTemplate;
+    @Value("classpath:/promptTemplates/systemPromptTemplate.st")
+    Resource promptTemplate;
 
     /*  prompt template
     private static final String questionPromptTemplate = """
@@ -30,8 +34,9 @@ public class SpringAiBoardGameService implements BoardGameService{
     """;
     */
     
-    public SpringAiBoardGameService(ChatClient chatClient) {
+    public SpringAiBoardGameService(ChatClient chatClient, GameRuleService gameRuleService) {
         this.chatClient = chatClient;
+        this.gameRuleService = gameRuleService;
     }
 
     @Override
@@ -40,12 +45,16 @@ public class SpringAiBoardGameService implements BoardGameService{
 //        String prompt = "Answer this question about " + question.gameTitle() +
 //                ":" + question.question();
 
+        var gameRules = gameRuleService.getRulesForGame(question.gameTitle());
+
         var anwserText = chatClient.prompt()
-                .user(userSpec -> userSpec
-                        .text(questionPromptTemplate)
+                .system(userSpec -> userSpec
+                        .text(promptTemplate)
                         .param("gameTitle", question.gameTitle())
                         .param("question",question.question())
+                        .param("rules", gameRules)
                 )
+                .user(question.question())
                 .call()
                 .content();
 

@@ -1,9 +1,9 @@
 package com.example.boardgamebuddy.service;
 
 import com.example.boardgamebuddy.domain.Answer;
+import com.example.boardgamebuddy.domain.AnswerTwo;
 import com.example.boardgamebuddy.domain.Question;
 import com.example.boardgamebuddy.exception.AnswerNotRelevantException;
-import com.example.boardgamebuddy.contracts.BoardGameService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.evaluation.RelevancyEvaluator;
 import org.springframework.ai.chat.prompt.ChatOptions;
@@ -11,7 +11,7 @@ import org.springframework.ai.evaluation.EvaluationRequest;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 
-public class SelfEvaluatingBoardGameService implements BoardGameService {
+public class SelfEvaluatingBoardGameService {
 
     private final ChatClient chatClient;
     private final RelevancyEvaluator evaluator;
@@ -29,9 +29,8 @@ public class SelfEvaluatingBoardGameService implements BoardGameService {
 
     }
 
-    @Override
     @Retryable(retryFor = AnswerNotRelevantException.class, maxAttempts = 2)
-    public Answer askQuestion(Question question) {
+    public AnswerTwo askQuestion(Question question) {
 
         var answerText = chatClient.prompt()
                 .user(question.question())
@@ -40,12 +39,12 @@ public class SelfEvaluatingBoardGameService implements BoardGameService {
 
         evaluateRelevancy(question,answerText);
 
-        return new Answer(question.gameTitle(), answerText);
+        return new AnswerTwo(question.gameTitle(), answerText);
     }
 
     @Recover
-    public Answer recover(AnswerNotRelevantException e) {
-        return new Answer("","I'm sorry, I wasn't able to answer the question.");
+    public AnswerTwo recover(AnswerNotRelevantException e) {
+        return new AnswerTwo("","I'm sorry, I wasn't able to answer the question.");
     }
 
     private void evaluateRelevancy(Question question, String answerText) {

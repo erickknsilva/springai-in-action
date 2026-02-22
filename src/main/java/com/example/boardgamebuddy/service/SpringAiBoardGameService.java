@@ -47,18 +47,17 @@ public class SpringAiBoardGameService implements BoardGameService {
 
         var gameRules = gameRuleService.getRulesForGame(question.gameTitle());
 
-        var anwserText = chatClient.prompt()
-                .system(userSpec -> userSpec
+        return chatClient.prompt()
+                .system(systemSpec -> systemSpec
                         .text(promptTemplate)
                         .param("gameTitle", question.gameTitle())
-                        .param("question",question.question())
+//                        .param("question",question.question())
                         .param("rules", gameRules)
                 )
                 .user(question.question())
                 .call()
-                .content();
+                .entity(Answer.class);
 
-        return new Answer(question.gameTitle(), anwserText);
     }
 
 }

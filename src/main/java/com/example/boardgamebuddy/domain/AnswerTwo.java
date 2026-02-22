@@ -1,6 +1,6 @@
 package com.example.boardgamebuddy.domain;
 
-public record Answer(
+public record AnswerTwo(
         String gameTitle,
         String  answer
 ) {

@@ -1,4 +1,4 @@
-package com.example.boardgamebuddy;
+package com.example.boardgamebuddy.exception;
 
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpStatus;

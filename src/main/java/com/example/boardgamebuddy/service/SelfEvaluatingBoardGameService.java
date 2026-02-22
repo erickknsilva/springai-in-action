@@ -1,14 +1,17 @@
-package com.example.boardgamebuddy;
+package com.example.boardgamebuddy.service;
 
+import com.example.boardgamebuddy.domain.Answer;
+import com.example.boardgamebuddy.domain.Question;
+import com.example.boardgamebuddy.exception.AnswerNotRelevantException;
+import com.example.boardgamebuddy.contracts.BoardGameService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.evaluation.RelevancyEvaluator;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.evaluation.EvaluationRequest;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
-import org.springframework.stereotype.Service;
 
-public class SelfEvaluatingBoardGameService implements  BoardGameService{
+public class SelfEvaluatingBoardGameService implements BoardGameService {
 
     private final ChatClient chatClient;
     private final RelevancyEvaluator evaluator;
@@ -19,7 +22,8 @@ public class SelfEvaluatingBoardGameService implements  BoardGameService{
                 .model("gpt-4o-mini")
                 .build();
 
-        this.chatClient = chatClientBuilder.defaultOptions(chatOptions).build();
+        this.chatClient = chatClientBuilder
+                .defaultOptions(chatOptions).build();
 
         this.evaluator = new RelevancyEvaluator(chatClientBuilder);
 

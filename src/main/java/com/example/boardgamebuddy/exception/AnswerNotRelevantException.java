@@ -1,4 +1,4 @@
-package com.example.boardgamebuddy;
+package com.example.boardgamebuddy.exception;
 
 public class AnswerNotRelevantException extends RuntimeException {
 

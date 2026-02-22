@@ -1,0 +1,23 @@
+- Bomba de Hambúrguer: Exploda o Hambúrguer de outro jogador enviando os ingredientes dele para o Cemitério.
+
+- Campo de Força do Hambúrguer: Seu Hambúrguer agora está protegido de todas as Cartas de Batalha.
+
+- Hamburguedon (Burgerpocalypse): Oblitere os ingredientes de todos os jogadores, incluindo os seus, e jogue-os no Cemitério.
+
+- Destruir!: Destrua qualquer Carta de Batalha sua ou de outro jogador e jogue-a no Cemitério.
+
+- Vai Comer Isso?: Roube o ingrediente de outro jogador e adicione-o ao seu Hambúrguer.
+
+- Coveiro: Procure no Cemitério qualquer ingrediente necessário e adicione-o ao seu Hambúrguer.
+
+- Não Tenho Nada!: Jogue sua mão no Cemitério e compre 5 novas cartas.
+
+- Mais Carne!: Transforme o Hambúrguer de outro jogador em um hambúrguer duplo adicionando uma Carne extra à lista de ingredientes dele.
+
+- Praga de Picles: Faça chover vingança sobre outro jogador adicionando Picles à lista de ingredientes dele.
+
+- Comedor Exigente: Jogue a Alface, o Tomate ou a Cebola de outro jogador no Cemitério.
+
+- A Velha Troca: Troque de mãos com outro jogador.
+
+- O Seu Parece Bom!: Troque seu Hambúrguer e todos os seus ingredientes com outro jogador, incluindo as Cartas de Batalha adicionadas.

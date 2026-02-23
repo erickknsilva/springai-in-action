@@ -1,9 +1,9 @@
 package com.example.boardgamebuddy.controller;
 
 
+import com.example.boardgamebuddy.contracts.BoardGameService;
 import com.example.boardgamebuddy.domain.Answer;
 import com.example.boardgamebuddy.domain.Question;
-import com.example.boardgamebuddy.contracts.BoardGameService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +22,7 @@ public class AskController {
 
     @PostMapping(path = "/ask", produces = "application/json")
     public Answer askQuestion(@RequestBody @Valid Question question) {
+        //Em fluxo Stream utilizar application/njson
         return boardGameService.askQuestion(question);
     }
 

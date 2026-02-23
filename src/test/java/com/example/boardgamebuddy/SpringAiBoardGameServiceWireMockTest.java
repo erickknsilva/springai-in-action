@@ -1,6 +1,7 @@
 package com.example.boardgamebuddy;
 
 import com.example.boardgamebuddy.domain.Question;
+import com.example.boardgamebuddy.service.GameRuleService;
 import com.example.boardgamebuddy.service.SpringAiBoardGameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
@@ -43,7 +44,7 @@ public class SpringAiBoardGameServiceWireMockTest {
 
     @Test
     public void testAskQuestion() {
-        var boardGameService = new SpringAiBoardGameService(chatClientBuilder.build());
+        var boardGameService = new SpringAiBoardGameService(chatClientBuilder.build(), new GameRuleService());
         var anwser = boardGameService.askQuestion(new Question("null","What is the capital of France?"));
 
         Assertions.assertThat(anwser).isNotNull();

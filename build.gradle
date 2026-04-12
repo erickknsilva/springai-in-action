@@ -27,6 +27,9 @@ dependencies {
 	implementation 'org.springframework.ai:spring-ai-starter-model-openai'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.zalando:logbook-spring-boot-starter:3.9.0'
+	implementation 'org.springframework.boot:spring-boot-docker-compose'
+	implementation 'org.springframework.ai:spring-ai-spring-boot-docker-compose'
+	implementation 'org.springframework.ai:spring-ai-starter-vector-store-qdrant'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.wiremock.integrations:wiremock-spring-boot:3.9.0'

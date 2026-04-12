@@ -7,6 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.Usage;
+import org.springframework.ai.document.DocumentReader;
+import org.springframework.ai.observation.conventions.VectorStoreObservationAttributes;
+import org.springframework.ai.observation.conventions.VectorStoreProvider;
+import org.springframework.ai.reader.TextReader;
+import org.springframework.ai.transformer.splitter.TextSplitter;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -14,12 +21,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class SpringAiBoardGameService implements BoardGameService {
 
+    private static final Logger logger = LoggerFactory.getLogger(SpringAiBoardGameService.class);
+
     private final ChatClient chatClient;
     private final GameRuleService gameRuleService;
-    private static final Logger logger = LoggerFactory.getLogger(SpringAiBoardGameService.class);
 
     @Value("classpath:/promptTemplates/systemPromptTemplate.st")
     Resource promptTemplate;
+
+    @Value("file://${HOME}/documents/Documento sem título.pdf")
+    private Resource documentResource;
 
     /*  prompt template
     private static final String questionPromptTemplate = """
@@ -70,6 +81,13 @@ public class SpringAiBoardGameService implements BoardGameService {
                 usage.getPromptTokens(),
                 usage.getCompletionTokens(),
                 usage.getTotalTokens());
+    }
+
+    public void loadDocument(VectorStore vectorStore) {
+        DocumentReader reader = new TextReader(documentResource);
+        TextSplitter splitter = TokenTextSplitter.builder().build();
+        vectorStore.accept(splitter.apply(reader.get()));
+
     }
 
     /*

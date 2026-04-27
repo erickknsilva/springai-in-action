@@ -32,23 +32,6 @@ public class SpringAiBoardGameService implements BoardGameService {
     @Value("file://${HOME}/documents/Documento sem título.pdf")
     private Resource documentResource;
 
-    /*  prompt template
-    private static final String questionPromptTemplate = """
-      Answer this question about {gameTitle}: {question}
-      """;
-    **/
-    /*
-    private static final String questionPromptTemplate = """
-    You are a helpful assistant, answering questions about tabletop games.
-    If you don't know anything about the game or don't know the answer,
-    say "I don't know".
-
-    The game is {gameTitle}.
-
-    The question is: {question}.
-    """;
-    */
-
     public SpringAiBoardGameService(ChatClient chatClient, GameRuleService gameRuleService) {
         this.chatClient = chatClient;
         this.gameRuleService = gameRuleService;
@@ -89,26 +72,5 @@ public class SpringAiBoardGameService implements BoardGameService {
         vectorStore.accept(splitter.apply(reader.get()));
 
     }
-
-    /*
-    @Deprecated
-    @Override
-    public Flux<String> askQuestion(Question question) {
-
-        var gameRules = gameRuleService.getRulesForGame(question.gameTitle());
-
-        return chatClient.prompt()
-                .system(systemSpec -> systemSpec
-                        .text(promptTemplate)
-                        .param("gameTitle", question.gameTitle())
-                        .param("question", question.question())
-                        .param("rules", gameRules)
-                )
-                .user(question.question())
-                .stream()
-                .content();
-
-    }
-    */
 
 }

@@ -36,7 +36,6 @@ public class GameRuleService {
                                 .eq("gameTitle", normalizeGameTitle(gameName)).build())
                 .build();
 
-        System.err.println("Search request: " + searchRequest);
         LOGGER.info("Search request: {}", searchRequest);
 
         var similarDocs = vectorStore.similaritySearch(searchRequest);
@@ -50,13 +49,6 @@ public class GameRuleService {
                 .map(Document::getText)
                 .collect(Collectors.joining(System.lineSeparator()));
 
-
-//            var fileName = String.format("classpath:gameRules/%s.txt",
-//                    gameName.toLowerCase().replace(" ", "_"));
-//
-//            return new DefaultResourceLoader()
-//                    .getResource(fileName)
-//                    .getContentAsString(Charset.defaultCharset());
     }
 
     private String normalizeGameTitle(String gameTitle) {

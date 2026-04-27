@@ -27,7 +27,7 @@ public class SpringAiBoardGameService implements BoardGameService {
     private final GameRuleService gameRuleService;
 
     @Value("classpath:/promptTemplates/systemPromptTemplate.st")
-    Resource promptTemplate;
+    private Resource promptTemplate;
 
     @Value("file://${HOME}/documents/Documento sem título.pdf")
     private Resource documentResource;
@@ -57,7 +57,7 @@ public class SpringAiBoardGameService implements BoardGameService {
     @Override
     public Answer askQuestion(Question question) {
 
-        var gameRules = gameRuleService.getRulesForGame(question.gameTitle());
+        var gameRules = gameRuleService.getRulesForGame(question.gameTitle(), question.question());
 
         var responseEntity = chatClient.prompt()
                 .system(systemSpec -> systemSpec

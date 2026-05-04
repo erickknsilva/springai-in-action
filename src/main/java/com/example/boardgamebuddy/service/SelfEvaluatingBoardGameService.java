@@ -1,8 +1,7 @@
 package com.example.boardgamebuddy.service;
 
-import com.example.boardgamebuddy.domain.Answer;
-import com.example.boardgamebuddy.domain.AnswerTwo;
-import com.example.boardgamebuddy.domain.Question;
+import com.example.boardgamebuddy.domain.dto.AnswerTwo;
+import com.example.boardgamebuddy.domain.dto.Question;
 import com.example.boardgamebuddy.exception.AnswerNotRelevantException;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.evaluation.RelevancyEvaluator;

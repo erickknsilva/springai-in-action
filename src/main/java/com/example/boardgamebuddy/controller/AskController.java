@@ -1,10 +1,12 @@
 package com.example.boardgamebuddy.controller;
 
 
-import com.example.boardgamebuddy.contracts.BoardGameService;
-import com.example.boardgamebuddy.domain.Answer;
-import com.example.boardgamebuddy.domain.Question;
+import com.example.boardgamebuddy.service.SpringAiBoardGameServiceModular;
+import com.example.boardgamebuddy.service.contract.BoardGameService;
+import com.example.boardgamebuddy.domain.entity.Answer;
+import com.example.boardgamebuddy.domain.dto.Question;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AskController {
 
     private final BoardGameService boardGameService;
+    private final SpringAiBoardGameServiceModular boardGameServiceModular;
 
-    public AskController(BoardGameService boardGameService) {
+    public AskController(BoardGameService boardGameService, SpringAiBoardGameServiceModular boardGameServiceModular) {
         this.boardGameService = boardGameService;
+        this.boardGameServiceModular = boardGameServiceModular;
     }
 
     @PostMapping(path = "/ask", produces = "application/json")

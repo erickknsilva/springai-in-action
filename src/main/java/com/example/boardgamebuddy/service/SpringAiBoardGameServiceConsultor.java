@@ -15,11 +15,12 @@ import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import static org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor.FILTER_EXPRESSION;
 
 @Service
-public class SpringAiBoardGameService implements BoardGameService {
+public class SpringAiBoardGameServiceConsultor implements BoardGameService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SpringAiBoardGameService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpringAiBoardGameServiceConsultor.class);
 
     private final ChatClient chatClient;
     private final GameRuleService gameRuleService;
@@ -30,7 +31,7 @@ public class SpringAiBoardGameService implements BoardGameService {
     @Value("file://${HOME}/documents/Documento sem título.pdf")
     private Resource documentResource;
 
-    public SpringAiBoardGameService(ChatClient chatClient, GameRuleService gameRuleService) {
+    public SpringAiBoardGameServiceConsultor(ChatClient chatClient, GameRuleService gameRuleService) {
         this.chatClient = chatClient;
         this.gameRuleService = gameRuleService;
     }
@@ -38,23 +39,19 @@ public class SpringAiBoardGameService implements BoardGameService {
     @Override
     public Answer askQuestion(Question question) {
 
-        var gameRules = gameRuleService.getRulesForGame(question.gameTitle(), question.question());
+        String gameNameMatch = String.format("gameTitle == '%s'", question.gameTitle());
 
-        var responseEntity = chatClient.prompt()
+        return chatClient.prompt()
                 .system(systemSpec -> systemSpec
                         .text(promptTemplate)
                         .param("gameTitle", question.gameTitle())
-                        .param("question", question.question())
-                        .param("rules", gameRules)
                 )
                 .user(question.question())
+                .advisors(advisorSpec -> advisorSpec
+                        .param(FILTER_EXPRESSION, gameNameMatch))
                 .call()
-                .responseEntity(Answer.class);
+                .entity(Answer.class);
 
-        var response = responseEntity.response();
-        logUsage(response.getMetadata().getUsage());
-
-        return responseEntity.entity();
     }
 
     private void logUsage(Usage usage) {

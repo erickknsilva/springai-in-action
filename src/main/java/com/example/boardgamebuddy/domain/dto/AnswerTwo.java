@@ -1,4 +1,4 @@
-package com.example.boardgamebuddy.domain;
+package com.example.boardgamebuddy.domain.dto;
 
 public record AnswerTwo(
         String gameTitle,

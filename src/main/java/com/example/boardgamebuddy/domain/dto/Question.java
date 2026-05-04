@@ -1,4 +1,4 @@
-package com.example.boardgamebuddy.domain;
+package com.example.boardgamebuddy.domain.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

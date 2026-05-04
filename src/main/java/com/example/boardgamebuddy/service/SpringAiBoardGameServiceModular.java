@@ -1,8 +1,8 @@
 package com.example.boardgamebuddy.service;
 
 import com.example.boardgamebuddy.service.contract.BoardGameService;
-import com.example.boardgamebuddy.domain.entity.Answer;
 import com.example.boardgamebuddy.domain.dto.Question;
+import com.example.boardgamebuddy.domain.entity.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
@@ -13,13 +13,18 @@ import org.springframework.ai.transformer.splitter.TextSplitter;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-@Service
-public class SpringAiBoardGameService implements BoardGameService {
+import static org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever.FILTER_EXPRESSION;
 
-    private static final Logger logger = LoggerFactory.getLogger(SpringAiBoardGameService.class);
+
+@Service
+@Primary
+public class SpringAiBoardGameServiceModular implements BoardGameService {
+
+    private static final Logger logger = LoggerFactory.getLogger(SpringAiBoardGameServiceModular.class);
 
     private final ChatClient chatClient;
     private final GameRuleService gameRuleService;
@@ -30,7 +35,7 @@ public class SpringAiBoardGameService implements BoardGameService {
     @Value("file://${HOME}/documents/Documento sem título.pdf")
     private Resource documentResource;
 
-    public SpringAiBoardGameService(ChatClient chatClient, GameRuleService gameRuleService) {
+    public SpringAiBoardGameServiceModular(ChatClient chatClient, GameRuleService gameRuleService) {
         this.chatClient = chatClient;
         this.gameRuleService = gameRuleService;
     }
@@ -38,23 +43,19 @@ public class SpringAiBoardGameService implements BoardGameService {
     @Override
     public Answer askQuestion(Question question) {
 
-        var gameRules = gameRuleService.getRulesForGame(question.gameTitle(), question.question());
+        String gameNameMatch = String.format("gameTitle == '%s'", question.gameTitle());
 
-        var responseEntity = chatClient.prompt()
+        return chatClient.prompt()
                 .system(systemSpec -> systemSpec
                         .text(promptTemplate)
                         .param("gameTitle", question.gameTitle())
-                        .param("question", question.question())
-                        .param("rules", gameRules)
                 )
                 .user(question.question())
+                .advisors(advisorSpec -> advisorSpec
+                        .param(FILTER_EXPRESSION, gameNameMatch))
                 .call()
-                .responseEntity(Answer.class);
+                .entity(Answer.class);
 
-        var response = responseEntity.response();
-        logUsage(response.getMetadata().getUsage());
-
-        return responseEntity.entity();
     }
 
     private void logUsage(Usage usage) {

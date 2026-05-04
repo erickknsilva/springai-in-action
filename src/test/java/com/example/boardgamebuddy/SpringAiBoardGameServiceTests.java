@@ -1,8 +1,8 @@
 package com.example.boardgamebuddy;
 
-import com.example.boardgamebuddy.domain.Answer;
-import com.example.boardgamebuddy.domain.Question;
-import com.example.boardgamebuddy.contracts.BoardGameService;
+import com.example.boardgamebuddy.domain.entity.Answer;
+import com.example.boardgamebuddy.domain.dto.Question;
+import com.example.boardgamebuddy.service.contract.BoardGameService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

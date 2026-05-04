@@ -1,6 +1,6 @@
 package com.example.boardgamebuddy;
 
-import com.example.boardgamebuddy.domain.Question;
+import com.example.boardgamebuddy.domain.dto.Question;
 import com.example.boardgamebuddy.service.GameRuleService;
 import com.example.boardgamebuddy.service.SpringAiBoardGameService;
 import com.fasterxml.jackson.databind.ObjectMapper;

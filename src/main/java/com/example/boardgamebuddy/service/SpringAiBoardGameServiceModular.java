@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 import static org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever.FILTER_EXPRESSION;
 
 
@@ -41,7 +42,7 @@ public class SpringAiBoardGameServiceModular implements BoardGameService {
     }
 
     @Override
-    public Answer askQuestion(Question question) {
+    public Answer askQuestion(Question question, String conversationId) {
 
         String gameNameMatch = String.format("gameTitle == '%s'", question.gameTitle());
 
@@ -52,7 +53,8 @@ public class SpringAiBoardGameServiceModular implements BoardGameService {
                 )
                 .user(question.question())
                 .advisors(advisorSpec -> advisorSpec
-                        .param(FILTER_EXPRESSION, gameNameMatch))
+                        .param(FILTER_EXPRESSION, gameNameMatch)
+                        .param(CONVERSATION_ID, conversationId))
                 .call()
                 .entity(Answer.class);
 

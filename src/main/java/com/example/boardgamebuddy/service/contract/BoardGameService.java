@@ -5,5 +5,5 @@ import com.example.boardgamebuddy.domain.dto.Question;
 
 public interface BoardGameService {
 
-    Answer askQuestion(Question question);
+    Answer askQuestion(Question question, String conversationId);
 }

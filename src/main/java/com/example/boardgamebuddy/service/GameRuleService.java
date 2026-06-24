@@ -30,7 +30,7 @@ public class GameRuleService {
         var searchRequest = SearchRequest.builder()
                 .query(question)
                 .similarityThreshold(0.5)
-//                .topK(6)
+//                .topK(6) // define quantos documentos semelhantes vai ser retornado por padrão é 4
                 .filterExpression(
                         new FilterExpressionBuilder()
                                 .eq("gameTitle", normalizeGameTitle(gameName)).build())

@@ -7,10 +7,7 @@ import com.example.boardgamebuddy.domain.entity.Answer;
 import com.example.boardgamebuddy.domain.dto.Question;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping
 @RestController
@@ -25,9 +22,11 @@ public class AskController {
     }
 
     @PostMapping(path = "/ask", produces = "application/json")
-    public Answer askQuestion(@RequestBody @Valid Question question) {
+    public Answer askQuestion(
+            @RequestHeader(name="X_AI_CONVERSATION_ID", defaultValue = "default")String conversationId,
+            @RequestBody @Valid Question question) {
         //Em fluxo Stream utilizar application/njson
-        return boardGameService.askQuestion(question);
+        return boardGameServiceModular.askQuestion(question, conversationId);
     }
 
 }

@@ -37,7 +37,7 @@ public class SpringAiBoardGameServiceConsultor implements BoardGameService {
     }
 
     @Override
-    public Answer askQuestion(Question question) {
+    public Answer askQuestion(Question question, String conversationId) {
 
         String gameNameMatch = String.format("gameTitle == '%s'", question.gameTitle());
 

@@ -41,7 +41,7 @@ public class SpringAiBoardGameServiceTests {
         String userText = "Porquê o ceú é azul ?";
 
         Question question = new Question(null,userText);
-        Answer anwser = boardGameService.askQuestion(question);
+        Answer anwser = boardGameService.askQuestion(question, "x-ai");
 
         EvaluationRequest evaluationRequest = new EvaluationRequest(userText,anwser.answer());
 
@@ -63,7 +63,7 @@ public class SpringAiBoardGameServiceTests {
         //arrange
         String userText = "Why is the sky blue?";
         var question = new Question(null, userText);
-        var answer =  boardGameService.askQuestion(question);
+        var answer =  boardGameService.askQuestion(question, null);
 
         //act
         EvaluationRequest evaluationRequest = new EvaluationRequest(userText,answer.answer());

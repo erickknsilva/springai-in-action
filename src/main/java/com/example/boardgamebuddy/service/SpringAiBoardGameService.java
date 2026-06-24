@@ -36,7 +36,7 @@ public class SpringAiBoardGameService implements BoardGameService {
     }
 
     @Override
-    public Answer askQuestion(Question question) {
+    public Answer askQuestion(Question question, String conversationId) {
 
         var gameRules = gameRuleService.getRulesForGame(question.gameTitle(), question.question());
 
@@ -68,7 +68,6 @@ public class SpringAiBoardGameService implements BoardGameService {
         DocumentReader reader = new TextReader(documentResource);
         TextSplitter splitter = TokenTextSplitter.builder().build();
         vectorStore.accept(splitter.apply(reader.get()));
-
     }
 
 }

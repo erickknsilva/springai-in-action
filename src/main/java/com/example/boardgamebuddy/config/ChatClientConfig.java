@@ -58,25 +58,27 @@ public class ChatClientConfig {
 
 
     @Bean
-    public ChatClient chatClientMessageChatMemoryAdvisor(ChatClient.Builder chatClientBuilder, VectorStore vectorStore, ChatMemory chatMemory) {
+    public ChatClient chatClient(ChatClient.Builder chatClientBuilder, VectorStore vectorStore,
+                                                         ChatMemory chatMemory) {
 
         return chatClientBuilder
                 .defaultAdvisors(
                         MessageChatMemoryAdvisor.builder(chatMemory).build(),
                         QuestionAnswerAdvisor.builder(vectorStore)
                                 .searchRequest(SearchRequest.builder().build()).build()
-
-                ).build();
-    }
-
-    @Bean
-    ChatMemoryRepository chatMemoryRepository(DataSource datasource){
-
-        return JdbcChatMemoryRepository.builder()
-                .dialect(new PostgresChatMemoryRepositoryDialect())
-                .dataSource(datasource)
+                )
+                .defaultToolNames("gameTools")
                 .build();
     }
+
+//    @Bean
+//    ChatMemoryRepository chatMemoryRepository(DataSource datasource){
+//
+//        return JdbcChatMemoryRepository.builder()
+//                .dialect(new PostgresChatMemoryRepositoryDialect())
+//                .dataSource(datasource)
+//                .build();
+//    }
 
     public RestClientCustomizer logBookCustomizer(LogbookClientHttpRequestInterceptor interceptor) {
         return restTemplateBuilder -> restTemplateBuilder.requestInterceptor(interceptor);

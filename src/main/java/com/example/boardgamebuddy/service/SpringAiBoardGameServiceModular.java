@@ -1,8 +1,9 @@
 package com.example.boardgamebuddy.service;
 
-import com.example.boardgamebuddy.service.contract.BoardGameService;
+import com.example.boardgamebuddy.config.GameTools;
 import com.example.boardgamebuddy.domain.dto.Question;
 import com.example.boardgamebuddy.domain.entity.Answer;
+import com.example.boardgamebuddy.service.contract.BoardGameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
@@ -28,7 +29,6 @@ public class SpringAiBoardGameServiceModular implements BoardGameService {
     private static final Logger logger = LoggerFactory.getLogger(SpringAiBoardGameServiceModular.class);
 
     private final ChatClient chatClient;
-    private final GameRuleService gameRuleService;
 
     @Value("classpath:/promptTemplates/systemPromptTemplate.st")
     private Resource promptTemplate;
@@ -36,9 +36,8 @@ public class SpringAiBoardGameServiceModular implements BoardGameService {
     @Value("file://${HOME}/documents/Documento sem título.pdf")
     private Resource documentResource;
 
-    public SpringAiBoardGameServiceModular(ChatClient chatClient, GameRuleService gameRuleService) {
+    public SpringAiBoardGameServiceModular(ChatClient chatClient) {
         this.chatClient = chatClient;
-        this.gameRuleService = gameRuleService;
     }
 
     @Override
@@ -57,7 +56,6 @@ public class SpringAiBoardGameServiceModular implements BoardGameService {
                         .param(CONVERSATION_ID, conversationId))
                 .call()
                 .entity(Answer.class);
-
     }
 
     private void logUsage(Usage usage) {
@@ -71,7 +69,6 @@ public class SpringAiBoardGameServiceModular implements BoardGameService {
         DocumentReader reader = new TextReader(documentResource);
         TextSplitter splitter = TokenTextSplitter.builder().build();
         vectorStore.accept(splitter.apply(reader.get()));
-
     }
 
 }

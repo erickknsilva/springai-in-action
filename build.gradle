@@ -33,7 +33,9 @@ dependencies {
 	implementation 'org.springframework.ai:spring-ai-advisors-vector-store'
 	implementation 'org.springframework.ai:spring-ai-rag'
 	implementation 'org.springframework.ai:spring-ai-starter-model-chat-memory-repository-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 
+	runtimeOnly 'com.h2database:h2'
 	runtimeOnly('org.postgresql:postgresql')
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -1,5 +1,10 @@
 server:
   port: 9002
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
 spring:
   application:
     name: board-game-buddy
@@ -17,15 +22,9 @@ spring:
         collection-name: board-game-buddy
     chat:
       memory:
-        repository-jdbc:
-          initialize-schema: always
-  sql:
-    init:
-      mode: always
-
-
-
-
+        repository:
+          jdbc:
+            initialize-schema: always
 
 logging:
   level:

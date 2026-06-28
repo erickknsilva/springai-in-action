@@ -76,7 +76,6 @@ public class ChatClientConfig {
                 .dialect(new PostgresChatMemoryRepositoryDialect())
                 .dataSource(datasource)
                 .build();
-
     }
 
     public RestClientCustomizer logBookCustomizer(LogbookClientHttpRequestInterceptor interceptor) {

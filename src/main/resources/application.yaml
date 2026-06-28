@@ -9,13 +9,22 @@ spring:
       chat:
         options:
           model: gpt-4.1-nano
-#          top-p: 0.8
-#          temperature: 0.5
-
+    #          top-p: 0.8
+    #          temperature: 0.5
     vectorstore:
       qdrant:
         initialize-schema: true
         collection-name: board-game-buddy
+    chat:
+      memory:
+        repository-jdbc:
+          initialize-schema: always
+  sql:
+    init:
+      mode: always
+
+
+
 
 
 logging:

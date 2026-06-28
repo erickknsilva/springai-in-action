@@ -20,11 +20,6 @@ spring:
       qdrant:
         initialize-schema: true
         collection-name: board-game-buddy
-    chat:
-      memory:
-        repository:
-          jdbc:
-            initialize-schema: always
 
 logging:
   level:

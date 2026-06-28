@@ -56,6 +56,7 @@ public class ChatClientConfig {
                 .build();
     }
 
+
     @Bean
     public ChatClient chatClientMessageChatMemoryAdvisor(ChatClient.Builder chatClientBuilder, VectorStore vectorStore, ChatMemory chatMemory) {
 
